@@ -2,7 +2,7 @@
 
 #def factorial(num):
 
-'''
+
 def factorial(x):
     y = 1
 
@@ -12,8 +12,6 @@ def factorial(x):
         
     print("Its factorial is: " + str(y))
 
-
-'''
 
 '''
 x=4, z= 3, y = 12
@@ -82,7 +80,7 @@ def main():
     #x = int(input("Give me a number: "))
     #factorial(x)
 
-    camelCode()
+    #camelCode()
 
     #doubleIt()
 
