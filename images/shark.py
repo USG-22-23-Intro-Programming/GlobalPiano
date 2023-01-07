@@ -43,6 +43,7 @@ class shark:
 
         #fish 1 is closest
         if dis1 < dis2 and dis1 < dis3:
+            self.body.undraw()
             #x
             k1 = f1.location[0] - self.location[0]
             #y
@@ -106,6 +107,7 @@ class shark:
 
         if dis2 < dis1 and dis1 < dis3:
             #SHARK MOVE TOWARDS F2
+            self.body.undraw()
             
             #x
             kk1 = f2.location[0] - self.location[0]
@@ -170,6 +172,7 @@ class shark:
 
         if dis3 < dis2 and dis3 < dis1:
             #SHARK MOVE TOWARDS F3
+            self.body.undraw()
             
             #x
             ke1 = f3.location[0] - self.location[0]
@@ -225,6 +228,7 @@ class shark:
                         #fish is above
                         if ke2 < 0:
                             self.body = Image(Point(self.location[0] -20, self.location[1] - 20), "shark.png")
+            
 
             self.body.draw(win)
                     
