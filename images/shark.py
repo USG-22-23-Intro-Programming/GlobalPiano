@@ -16,31 +16,298 @@ class shark:
             y1 = 10
 
             while y1 <= 390:
-                coords = (x1, y1)
+                coords = [x1, y1]
                 y1 = y1 + 20
 
                 listOfLocations.append(coords)
             x1 = x1 + 20
         
         self.location = random.choice(listOfLocations)
+        self.x = self.location[0]
+        self.y = self.location[1]
 
-        self.body = Image(Point(self.location[0], self.location[1]), "shark.png")
+        self.body = Image(Point(self.x, self.y), "shark.png")
         
         self.body.draw(win)
+
 
         #Square = Rectangle(Point(self.location[0] - 120, self.location[1] - 120), Point(self.location[0] + 120, self.location[1] + 120))
         #Square.draw(win)
 
 
-    def undraw(self):
+    def unDraw(self):
         self.body.undraw()
 
     def movement(self, win, f1, f2, f3):
+
+        dis1 = abs(self.x - f1.location[0]) + abs(self.y - f1.location[1])
+        dis2 = abs(self.x - f2.location[0]) + abs(self.y - f2.location[1])
+        dis3 = abs(self.x - f3.location[0]) + abs(self.y - f3.location[1])
+
+
+        #list of all possible locations of the shark
+        
+        sPosLoc = [[1, 0], [1, 1], [1, 2], [1, -1], [1, -2],
+                              [2, 0], [2, -1], [2, 1],
+                              [-1, 0], [-1, 1], [-1, 2], [-1, -1], [-1, -2],
+                              [-2, 0], [-2, -1], [-2, 1],
+                              [0, 1], [0, 2], [0, -1], [0, -2]]
+
+
+        #removes coords outside of grid
+        for locloc in sPosLoc:
+            sNewX = self.x + locloc[0] *20
+            sNewY = self.y + locloc[1] *20
+            if sNewX >= 390 or sNewX <= 10:
+                sPosLoc.remove(locloc)
+            if sNewY >= 390 or sNewY <= 10:
+                sPosLoc.remove(locloc)
+
+        
+
+        #chase 1
+        if dis1 < dis2 and dis1 < dis3:
+            chase = 1
+        if dis1 == dis2 or dis1 == dis3:
+            chase = 1
+        #chase 2
+        if dis2 < dis1 and dis2 < dis3:
+            chase = 1
+        if dis2 == dis3:
+            chase = 1
+        #chase 3
+        if dis3 < dis2 and dis3 < dis1:
+            chase = 1
+
+        if chase == 1:
+            possCoords = []
+            
+            for locations in sPosLoc:
+                sNewX = self.x + locations[0] *20
+                sNewY = self.y + locations[1] *20
+                closeX = abs(sNewX - f1.location[0])
+                closeY = abs(sNewY - f1.location[1])
+                possCoords.append([closeX, closeY])
+
+            possCoords.sort()
+            
+            closestCoord = possCoords[0]
+            xx = closestCoord[0]
+                
+            yy = closestCoord[1]
+            
+
+
+
+        
+
+        #cannot both be greater than 2
+        newx = xx
+        newy = yy
+
+
+        self.body.move(20*newx, 20*newy)
+
+
+        '''
+        
         dis1 = abs(self.location[0] - f1.location[0]) + abs(self.location[1] - f1.location[1])
         dis2 = abs(self.location[0] - f2.location[0]) + abs(self.location[1] - f2.location[1])
         dis3 = abs(self.location[0] - f3.location[0]) + abs(self.location[1] - f3.location[1])
 
 
+        #CHANGE CHASE TO NORMAL LATER, THIS IS A TEST
+        #fish one is closest
+        if dis1 < dis2 and dis1 < dis3:
+            chase = 1
+
+        #fish two is closest
+        if dis2 < dis1 and dis2 < dis3:
+            chase = 2
+
+        #fish three is closest
+        if dis3 < dis2 and dis3 < dis1:
+            chase = 3
+
+        else:
+
+            #if fish 1 = fish 2 or 3, go for 1
+            if dis1 == dis2 or dis1 == dis3:
+                chase = 1
+
+            #if fish 2 = 3
+            if dis3 == dis2:
+                chase = 3
+
+        #x - 1
+        k1 = f1.location[0] - self.location[0]
+        #y - 1
+        k2 = f1.location[1] - self.location[1]
+
+        #x - 2
+        kk1 = f2.location[0] - self.location[0]
+        #y - 2
+        kk2 = f2.location[1] - self.location[1]
+
+
+        #x - 2
+        km1 = f3.location[0] - self.location[0]
+        #y - 2
+        km2 = f3.location[1] - self.location[1]
+
+        '''
+        #Notes for myself
+        goDown = self.location[1] + 20
+        goUp = self.location[1] - 20
+        goRight = self.location[0] + 20
+        goLeft = self.location[0] - 20
+
+        '''
+
+
+        if chase == 1:
+            #move towards fish 1
+            
+            #fish is exactly diagonal
+            if k1 == k2:
+                #fish is right
+                if k1 > 0:
+                    #fish is below
+                    if k2 > 0:
+                        self.location[0] = self.location[0] + 20
+                        self.location[1] = self.location[1] - 20
+                    else:
+                        self.location[0] = self.location[0] + 20
+                        self.location[1] = self.location[1] + 20
+
+                #fish is left
+                else:
+                    #fish is below
+                    if k2 > 0:
+                        self.location[0] = self.location[0] - 20
+                        self.location[1] = self.location[1] - 20
+                    else:
+                        self.location[0] = self.location[0] - 20
+                        self.location[1] = self.location[1] + 20
+                    
+
+            else:
+                for i in range(2):
+                    #fish is more to the side
+                    if k1 > k2:
+                        #fish is right
+                        if k1 > 0:
+                            self.location[0] = self.location[0] + 20
+                        else:
+                            self.location[0] = self.location[0] - 20
+                    
+
+                    #fish is more top/bottom
+                    if k1 < k2:
+                        #fish is below
+                        if k2 > 0:
+                            self.location[1] = self.location[1] + 20
+                        else:
+                            self.location[1] = self.location[1] - 20
+
+        if chase == 2:
+            #move towards fish 2
+
+            #fish is exactly diagonal
+            if kk1 == kk2:
+                #fish is right
+                if kk1 > 0:
+                    #fish is below
+                    if kk2 > 0:
+                        self.location[0] = self.location[0] + 20
+                        self.location[1] = self.location[1] - 20
+                    else:
+                        self.location[0] = self.location[0] + 20
+                        self.location[1] = self.location[1] + 20
+
+                #fish is left
+                else:
+                    #fish is below
+                    if kk2 > 0:
+                        self.location[0] = self.location[0] - 20
+                        self.location[1] = self.location[1] - 20
+                    else:
+                        self.location[0] = self.location[0] - 20
+                        self.location[1] = self.location[1] + 20
+                    
+
+            else:
+                for i in range(2):
+                    #fish is more to the side
+                    if kk1 > kk2:
+                        #fish is right
+                        if kk1 > 0:
+                            self.location[0] = self.location[0] + 20
+                        else:
+                            self.location[0] = self.location[0] - 20
+                    
+
+                    #fish is more top/bottom
+                    if kk1 < kk2:
+                        #fish is below
+                        if kk2 > 0:
+                            self.location[1] = self.location[1] + 20
+                        else:
+                            self.location[1] = self.location[1] - 20
+
+        if chase == 3:
+            #move towards fish 3
+
+            #fish is exactly diagonal
+            if km1 == km2:
+                #fish is right
+                if km1 > 0:
+                    #fish is below
+                    if km2 > 0:
+                        self.location[0] = self.location[0] + 20
+                        self.location[1] = self.location[1] - 20
+                    else:
+                        self.location[0] = self.location[0] + 20
+                        self.location[1] = self.location[1] + 20
+
+                #fish is left
+                else:
+                    #fish is below
+                    if km2 > 0:
+                        self.location[0] = self.location[0] - 20
+                        self.location[1] = self.location[1] - 20
+                    else:
+                        self.location[0] = self.location[0] - 20
+                        self.location[1] = self.location[1] + 20
+                    
+
+            else:
+                for i in range(2):
+                    #fish is more to the side
+                    if km1 > km2:
+                        #fish is right
+                        if k1 > 0:
+                            self.location[0] = self.location[0] + 20
+                        else:
+                            self.location[0] = self.location[0] - 20
+                    
+
+                    #fish is more top/bottom
+                    if km1 < km2:
+                        #fish is below
+                        if km2 > 0:
+                            self.location[1] = self.location[1] + 20
+                        else:
+                            self.location[1] = self.location[1] - 20
+                            
+
+        self.body = Image(Point(self.location[0], self.location[1]), "shark.png")
+        self.body.draw(win)
+
+'''
+
+
+'''
         #fish 1 is closest
         if dis1 < dis2 and dis1 < dis3:
             self.body.undraw()
@@ -235,6 +502,7 @@ class shark:
                     
 
             ccc = 0
+'''
 
 def undraw(self):
     self.body.undraw()
