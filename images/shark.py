@@ -15,7 +15,7 @@ class shark:
             y1 = 10
 
             while y1 <= 390:
-                coords = [x1, y1]
+                coords = (x1, y1)
                 y1 = y1 + 20
 
                 listOfLocations.append(coords)
@@ -36,6 +36,9 @@ class shark:
 
     def unDraw(self):
         self.body.undraw()
+        
+    def draw(self, win):
+        self.body.draw(win)
 
     def movement(self, win, f1, f2, f3):
 
@@ -46,21 +49,23 @@ class shark:
 
         #list of all possible locations of the shark
         
-        sPosLoc = [[1, 0], [1, 1], [1, 2], [1, -1], [1, -2],
-                              [2, 0], [2, -1], [2, 1],
-                              [-1, 0], [-1, 1], [-1, 2], [-1, -1], [-1, -2],
-                              [-2, 0], [-2, -1], [-2, 1],
-                              [0, 1], [0, 2], [0, -1], [0, -2]]
+        sPosLoc = [(1, 0), (1, 1), (1, 2), (1, -1), (1, -2),
+                              (2, 0), (2, -1), (2, 1),
+                              (-1, 0), (-1, 1), (-1, 2), (-1, -1), (-1, -2),
+                              (-2, 0), (-2, -1), (-2, 1),
+                              (0, 1), (0, 2), (0, -1), (0, -2)]
 
 
         #removes coords outside of grid
-        for lock in sPosLoc:
-            sNewX = self.x + lock[0] *20
-            sNewY = self.y + lock[1] *20
-            if sNewX >= 390 or sNewX <= 10:
-                sPosLoc.remove(lock)
-            if sNewY >= 390 or sNewY <= 10:
-                sPosLoc.remove(lock)
+        for locloc in sPosLoc:
+            sNewX = self.x + locloc[0] *20
+            sNewY = self.y + locloc[1] *20
+            if sNewX > 390 or sNewX < 10:
+                sPosLoc.remove(locloc)
+            if sNewY > 390 or sNewY < 10:
+                sPosLoc.remove(locloc)
+
+        print(sPosLoc)
 
         
 
@@ -79,16 +84,19 @@ class shark:
             chase = 1
 
         if chase == 1:
-            possCoords = []
             
-            for lock in sPosLoc:
-                sNewX = self.x + lock[0] *20
-                sNewY = self.y + lock[1] *20
+            possCoords = []
+            print(possCoords)
+            
+            for locations in sPosLoc:
+                sNewX = self.x + locations[0] *20
+                sNewY = self.y + locations[1] *20
                 closeX = abs(sNewX - f1.location[0])
                 closeY = abs(sNewY - f1.location[1])
-                possCoords.append([closeX, closeY])
+                possCoords.append((closeX, closeY))
 
             possCoords.sort()
+            print(possCoords)
             
             closestCoord = possCoords[0]
             xx = closestCoord[0]
@@ -96,16 +104,11 @@ class shark:
             yy = closestCoord[1]
             
 
-
-
-        
-
         #cannot both be greater than 2
-        newx = xx
-        newy = yy
+        self.body = Image(Point(xx, yy), "shark.png")
 
-
-        self.body.move(20*newx, 20*newy)
+        self.body.draw(win)
+        
 
 
         '''
@@ -154,14 +157,14 @@ class shark:
         #y - 2
         km2 = f3.location[1] - self.location[1]
 
-        '''
+       
         #Notes for myself
         goDown = self.location[1] + 20
         goUp = self.location[1] - 20
         goRight = self.location[0] + 20
         goLeft = self.location[0] - 20
 
-        '''
+      
 
 
         if chase == 1:
@@ -503,8 +506,6 @@ class shark:
             ccc = 0
 '''
 
-def undraw(self):
-    self.body.undraw()
         
 
 
