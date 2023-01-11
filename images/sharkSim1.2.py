@@ -2,7 +2,7 @@ from graphics import *
 from Button import *
 import random
 from fish import *
-#from shark import *
+from shark import *
 
 
 
@@ -16,7 +16,7 @@ def main():
     F1 = fish(win)
     F2 = fish(win)
     F3 = fish(win)
-    #S = shark(win)
+    S = shark(win)
 #FISHES in a list
     fishsss = [F1, F2, F3]
 
@@ -24,19 +24,6 @@ def main():
     Q = Button(win, Point(500, 500), Point(550, 540), "plum1", "QUIT")
     R = Button(win, Point(500, 450), Point(550, 490), "plum1", "Reset")
     M = Button(win, Point(500, 400), Point(550, 440), "plum1", "Move")
-    
-    while True:
-
-        m = win.getMouse()
-
-        if R.isClicked(m):
-
-    #fish stuff
-            S.undraw()
-            for fishes in fishsss:
-                fishes.undraw() #undraws every fish?
-            main()
-
   
     while True:
         
@@ -44,7 +31,7 @@ def main():
 
         if R.isClicked(m):
 
-            S.undraw()
+            S.unDraw()
             for fishes in fishsss:
                 fishes.undraw() #undraws every fish?
             main()
@@ -54,7 +41,7 @@ def main():
                 fishes.undraw()
                 fishes.randomMove(win)
 
-            #S.movement(win, F1, F2, F3)
+            S.movement(win, F1, F2, F3)
             
 
         if Q.isClicked(m):
