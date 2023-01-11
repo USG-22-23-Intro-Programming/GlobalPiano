@@ -1,6 +1,5 @@
 from graphics import *
 import random
-from fish import *
 
 class shark:
 
@@ -55,13 +54,13 @@ class shark:
 
 
         #removes coords outside of grid
-        for locloc in sPosLoc:
-            sNewX = self.x + locloc[0] *20
-            sNewY = self.y + locloc[1] *20
+        for lock in sPosLoc:
+            sNewX = self.x + lock[0] *20
+            sNewY = self.y + lock[1] *20
             if sNewX >= 390 or sNewX <= 10:
-                sPosLoc.remove(locloc)
+                sPosLoc.remove(lock)
             if sNewY >= 390 or sNewY <= 10:
-                sPosLoc.remove(locloc)
+                sPosLoc.remove(lock)
 
         
 
@@ -82,9 +81,9 @@ class shark:
         if chase == 1:
             possCoords = []
             
-            for locations in sPosLoc:
-                sNewX = self.x + locations[0] *20
-                sNewY = self.y + locations[1] *20
+            for lock in sPosLoc:
+                sNewX = self.x + lock[0] *20
+                sNewY = self.y + lock[1] *20
                 closeX = abs(sNewX - f1.location[0])
                 closeY = abs(sNewY - f1.location[1])
                 possCoords.append([closeX, closeY])
