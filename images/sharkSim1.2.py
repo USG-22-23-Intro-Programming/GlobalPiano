@@ -14,15 +14,16 @@ def main():
     F2 = fish(win)
     F3 = fish(win)
     S = shark(win)
-    S.unDraw()
-    S.draw(win)
 #FISHES in a list
     fishsss = [F1, F2, F3]
+
+    c = 0
 
 #BUTTONS
     Q = Button(win, Point(500, 500), Point(550, 540), "plum1", "QUIT")
     R = Button(win, Point(500, 450), Point(550, 490), "plum1", "Reset")
     M = Button(win, Point(500, 400), Point(550, 440), "plum1", "Move")
+    G = Button(win, Point(500, 350), Point(550, 390), "plum1", "Run")
   
     while True:
         
@@ -31,19 +32,33 @@ def main():
         if R.isClicked(m):
 
             S.unDraw()
+            c = 3
             for fishes in fishsss:
                 fishes.undraw() #undraws every fish?
             main()
             
         if M.isClicked(m):
             for fishes in fishsss:
-                fishes.undraw()
                 fishes.randomMove(win)
-            S.unDraw()
+                if fishes.location[0] == S.location[0] and fishes.location[1] == S.location[1]:
+                    fishes.eaten()
+                    c = c + 1
             S.movement(win, F1, F2, F3)
+
+        if G.isClicked(m):
+            while c < 3:
+                for fishes in fishsss:
+                    fishes.randomMove(win)
+                if fishes.location[0] == S.location[0] and fishes.location[1] == S.location[1]:
+                    fishes.eaten()
+                S.movement(win, F1, F2, F3)
+                if c == 3:
+                    break
+                
             
 
         if Q.isClicked(m):
+            c = 3
             break
 
     win.close()
