@@ -89,10 +89,10 @@ class shark:
             print(possCoords)
             
             for locations in sPosLoc:
-                sNewX = self.x + locations[0] *20
-                sNewY = self.y + locations[1] *20
-                closeX = abs(sNewX - f1.location[0])
-                closeY = abs(sNewY - f1.location[1])
+                xx1 = self.x + locations[0] *20
+                yy1 = self.y + locations[1] *20
+                closeX = abs(xx1 - f1.location[0]) 
+                closeY = abs(yy1 - f1.location[1])
                 possCoords.append((closeX, closeY))
 
             possCoords.sort()
