@@ -56,7 +56,11 @@ class fish:
         self.body = Image(Point(self.location[0], self.location[1]), "fish.png")
         self.body.draw(win)
 
+    def location(self):
+        self.location
+
     def programmedMove(self, win):
+        k = 1
 
         
         
