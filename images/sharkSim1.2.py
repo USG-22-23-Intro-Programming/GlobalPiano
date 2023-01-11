@@ -4,19 +4,18 @@ import random
 from fish import *
 from shark import *
 
-
-
 def main():
 
     grid()
 
-    #buttons
 
 #AQUATICS
     F1 = fish(win)
     F2 = fish(win)
     F3 = fish(win)
     S = shark(win)
+    S.unDraw()
+    S.draw(win)
 #FISHES in a list
     fishsss = [F1, F2, F3]
 
@@ -40,7 +39,7 @@ def main():
             for fishes in fishsss:
                 fishes.undraw()
                 fishes.randomMove(win)
-
+            S.unDraw()
             S.movement(win, F1, F2, F3)
             
 
